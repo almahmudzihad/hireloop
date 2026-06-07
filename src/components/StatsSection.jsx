@@ -34,6 +34,7 @@ export default function StatsSection() {
             label: "Satisfaction Rate",
         },
     ];
+    
 
     return (
         <section className="relative overflow-hidden bg-black py-28 text-white">
@@ -60,7 +61,7 @@ export default function StatsSection() {
                         <br />
                         find their dream positions.
                     </h2>
-                    <motion.p animate={{ rotate: 0 }}>Remote Jobs</motion.p>
+                    <motion.p animate={{ rotate: 360 }}>Remote Jobs</motion.p>
                     <motion.p initial={{ scale: 0 }} animate={{ scale: 1 }}>On-site Jobs</motion.p>
                 </div>
 
