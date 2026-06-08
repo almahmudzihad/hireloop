@@ -1,54 +1,57 @@
 
 
-import {Bars, Bell, Envelope, Gear, House, Magnifier, Person} from "@gravity-ui/icons";
-import {Button, Drawer} from "@heroui/react";
+import { LayoutSideContentLeft, Bell, Briefcase, Envelope, Gear, House, Magnifier, Person } from "@gravity-ui/icons";
+import { Button, Drawer } from "@heroui/react";
+import Link from "next/link";
 
 export function DashboardSidebar() {
-  const navItems = [
-    {icon: House, label: "Home"},
-    {icon: Magnifier, label: "Search"},
-    {icon: Bell, label: "Notifications"},
-    {icon: Envelope, label: "Messages"},
-    {icon: Person, label: "Profile"},
-    {icon: Gear, label: "Settings"},
-  ];
-  const navLinks = <nav className="flex flex-col gap-1">
-                {navItems.map((item) => (
-                  <button
-                    key={item.label}
-                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
-                    type="button"
-                  >
-                    <item.icon className="size-5 text-muted" />
-                    {item.label}
-                  </button>
-                ))}
-              </nav>;
+    const navItems = [
+        { icon: House, href: "/dashboard/recruiter", label: "Home" },
+        { icon: Magnifier, href: "/dashboard/recruiter/jobs", label: "Jobs" },
+        { icon: Bell, href: "/dashboard/recruiter/jobs/new", label: "Post A Job" },
+        { icon: Briefcase, href: "/dashboard/recruiter/company", label: "Company Profile" },
+        { icon: Envelope, href: "/messages", label: "Messages" },
+        { icon: Person, href: "/profile", label: "Profile" },
+        { icon: Gear, href: "/settings", label: "Settings" },
+    ];
 
-  return (
-    <>
-    <aside className="hidden w-72 flex-col gap-6 border-r border-white/10 py-6 px-4 lg:block">
-        {navLinks}
-    </aside>
-    <Drawer>
-      <Button className="lg:hidden" variant="secondary">
-        <Bars />
-        Sidebar
-      </Button>
-      <Drawer.Backdrop>
-        <Drawer.Content placement="left">
-          <Drawer.Dialog>
-            <Drawer.CloseTrigger />
-            <Drawer.Header>
-              <Drawer.Heading>Navigation</Drawer.Heading>
-            </Drawer.Header>
-            <Drawer.Body>
-              {navLinks}
-            </Drawer.Body>
-          </Drawer.Dialog>
-        </Drawer.Content>
-      </Drawer.Backdrop>
-    </Drawer>
-    </>
-  );
+    const navContent = <nav className="flex flex-col gap-1">
+        {navItems.map((item) => (
+            <Link
+                key={item.label}
+                className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
+                href={item.href}
+            >
+                <item.icon className="size-5 text-muted" />
+                {item.label}
+            </Link>
+        ))}
+    </nav>
+
+    return (
+        <>
+            <aside className="hidden w-64 shrink-0 border-r border-default p-4 lg:block">
+                {navContent}
+            </aside>
+            <Drawer>
+                <Button className="lg:hidden" variant="secondary">
+                    <LayoutSideContentLeft />
+                    Sidebar
+                </Button>
+                <Drawer.Backdrop>
+                    <Drawer.Content placement="left">
+                        <Drawer.Dialog>
+                            <Drawer.CloseTrigger />
+                            <Drawer.Header>
+                                <Drawer.Heading>Navigation</Drawer.Heading>
+                            </Drawer.Header>
+                            <Drawer.Body>
+                                {navContent}
+                            </Drawer.Body>
+                        </Drawer.Dialog>
+                    </Drawer.Content>
+                </Drawer.Backdrop>
+            </Drawer>
+        </>
+    );
 }

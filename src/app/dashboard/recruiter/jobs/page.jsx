@@ -1,5 +1,6 @@
 import { getCompanyJobs } from '@/lib/api/jobs'
 import React from 'react'
+import { Eye, Edit, Trash2 } from 'lucide-react'
 
 const RecruiterJobsPage = async () => {
   const companyId = 'company_123'
@@ -22,15 +23,13 @@ const RecruiterJobsPage = async () => {
               <th className="px-6 py-4">Remote</th>
               <th className="px-6 py-4">Status</th>
               <th className="px-6 py-4">Deadline</th>
+              <th className="px-6 py-4 text-center">Actions</th>
             </tr>
           </thead>
 
           <tbody className="divide-y divide-gray-100">
             {jobs?.map((job) => (
-              <tr
-                key={job._id}
-                className="hover:bg-gray-50 transition"
-              >
+              <tr key={job._id} className="hover:bg-gray-50 transition">
                 <td className="px-6 py-4 font-medium text-gray-900">
                   {job.jobTitle}
                 </td>
@@ -73,6 +72,37 @@ const RecruiterJobsPage = async () => {
 
                 <td className="px-6 py-4 text-gray-600">
                   {job.deadline}
+                </td>
+
+                {/* ACTIONS */}
+                <td className="px-6 py-4">
+                  <div className="flex items-center justify-center gap-3">
+                    
+                    {/* VIEW */}
+                    <button
+                      className="p-2 rounded-md hover:bg-blue-100 text-blue-600 transition"
+                      title="View"
+                    >
+                      <Eye size={18} />
+                    </button>
+
+                    {/* EDIT */}
+                    <button
+                      className="p-2 rounded-md hover:bg-yellow-100 text-yellow-600 transition"
+                      title="Edit"
+                    >
+                      <Edit size={18} />
+                    </button>
+
+                    {/* DELETE */}
+                    <button
+                      className="p-2 rounded-md hover:bg-red-100 text-red-600 transition"
+                      title="Delete"
+                    >
+                      <Trash2 size={18} />
+                    </button>
+
+                  </div>
                 </td>
               </tr>
             ))}
