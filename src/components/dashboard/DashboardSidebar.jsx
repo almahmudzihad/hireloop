@@ -12,22 +12,7 @@ export function DashboardSidebar() {
     {icon: Person, label: "Profile"},
     {icon: Gear, label: "Settings"},
   ];
-
-  return (
-    <Drawer>
-      <Button variant="secondary">
-        <Bars />
-        Menu
-      </Button>
-      <Drawer.Backdrop>
-        <Drawer.Content placement="left">
-          <Drawer.Dialog>
-            <Drawer.CloseTrigger />
-            <Drawer.Header>
-              <Drawer.Heading>Navigation</Drawer.Heading>
-            </Drawer.Header>
-            <Drawer.Body>
-              <nav className="flex flex-col gap-1">
+  const navLinks = <nav className="flex flex-col gap-1">
                 {navItems.map((item) => (
                   <button
                     key={item.label}
@@ -38,11 +23,32 @@ export function DashboardSidebar() {
                     {item.label}
                   </button>
                 ))}
-              </nav>
+              </nav>;
+
+  return (
+    <>
+    <aside className="hidden w-72 flex-col gap-6 border-r border-white/10 py-6 px-4 lg:block">
+        {navLinks}
+    </aside>
+    <Drawer>
+      <Button className="lg:hidden" variant="secondary">
+        <Bars />
+        Sidebar
+      </Button>
+      <Drawer.Backdrop>
+        <Drawer.Content placement="left">
+          <Drawer.Dialog>
+            <Drawer.CloseTrigger />
+            <Drawer.Header>
+              <Drawer.Heading>Navigation</Drawer.Heading>
+            </Drawer.Header>
+            <Drawer.Body>
+              {navLinks}
             </Drawer.Body>
           </Drawer.Dialog>
         </Drawer.Content>
       </Drawer.Backdrop>
     </Drawer>
+    </>
   );
 }
