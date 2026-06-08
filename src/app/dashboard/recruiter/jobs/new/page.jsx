@@ -13,11 +13,12 @@ import {
     ListBox,
     Switch,
     Button,
-    toast
+    toast,
+    Toast
 } from "@heroui/react";
 import { Briefcase, Globe } from "@gravity-ui/icons";
-// import { createJob } from "@/lib/actions/jobs";
-// import { redirect } from "next/navigation";
+import { createJob } from "@/lib/actions/jobs";
+import { redirect } from "next/navigation";
 
 export default function PostJobPage() {
     // Mock configuration for recruiter's authenticated state
@@ -33,10 +34,10 @@ export default function PostJobPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!mockCompany.isApproved) {
-            alert("Your company profile must be approved before you can post jobs.");
-            return;
-        }
+        // if (!mockCompany.isApproved) {
+        //     alert("Your company profile must be approved before you can post jobs.");
+        //     return;
+        // }
 
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries());
@@ -67,14 +68,16 @@ export default function PostJobPage() {
             isPubliclyVisible: true,
         };
 
-        // const res = await createJob(payload);
-        // if (res.insertedId) {
-        //     toast.success("Job posted successfully!");
-        //     e.target.reset();
-        //     setIsRemote(false);
-        //     redirect("/dashboard/recruiter/jobs");
-        // }
-        console.log("Payload:", payload);
+        
+        const res = await createJob(payload);
+        if (res.insertedId) {
+            toast.success("Job posted successfully!");
+            e.target.reset();
+            setIsRemote(false);
+             redirect("/dashboard");
+            console.log("Job posted successfully!");
+        }
+        console.log(res);
     };
 
     // Dark styles styled to match your image_988c20.png reference layout
@@ -123,7 +126,7 @@ export default function PostJobPage() {
 
                             <Select className={selectBoxClass} name="jobCategory" isInvalid={!!errors.jobCategory}>
                                 <Label className="text-zinc-400 font-medium text-sm mb-1 block">Job Category</Label>
-                                <Select.Trigger className={triggerClasses}>
+                                <Select.Trigger className={triggerClasses} aria-label="Select job category" >
                                     <Select.Value className="text-white placeholder:text-zinc-600" />
                                     <Select.Indicator />
                                 </Select.Trigger>
@@ -142,7 +145,8 @@ export default function PostJobPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <Select className={selectBoxClass} name="jobType" isInvalid={!!errors.jobType}>
                                 <Label className="text-zinc-400 font-medium text-sm mb-1 block">Job Type</Label>
-                                <Select.Trigger className={triggerClasses}>
+                                <Select.Trigger className={triggerClasses} aria-label="Select job type"
+>
                                     <Select.Value />
                                     <Select.Indicator />
                                 </Select.Trigger>
@@ -163,16 +167,16 @@ export default function PostJobPage() {
                                     <span className="text-zinc-400 font-medium text-sm block">Salary Range</span>
                                     <div className="flex gap-2">
                                         <TextField name="minSalary" isInvalid={!!errors.minSalary} className="w-full">
-                                            <Input placeholder="Min" type="number" className={textInputClass} />
+                                            <Input aria-label="Minimum salary" placeholder="Min" type="number" className={textInputClass} />
                                         </TextField>
                                         <TextField name="maxSalary" isInvalid={!!errors.maxSalary} className="w-full">
-                                            <Input placeholder="Max" type="number" className={textInputClass} />
+                                            <Input placeholder="Max" type="number" aria-label="Maximum salary" className={textInputClass} />
                                         </TextField>
                                     </div>
                                 </div>
 
                                 <Select className="w-full mt-6" name="currency" defaultSelectedKeys={["USD"]}>
-                                    <Select.Trigger className={triggerClasses}>
+                                    <Select.Trigger className={triggerClasses} aria-label="Select currency">
                                         <Select.Value />
                                         <Select.Indicator />
                                     </Select.Trigger>
@@ -197,6 +201,7 @@ export default function PostJobPage() {
                                         isSelected={isRemote}
                                         onChange={setIsRemote}
                                         size="sm"
+                                        aria-label="Toggle remote job"
                                     >
                                         <Switch.Control className="bg-zinc-800 data-[selected=true]:bg-white">
                                             <Switch.Thumb className="bg-zinc-400 data-[selected=true]:bg-black" />
@@ -211,6 +216,7 @@ export default function PostJobPage() {
                                     <div className="relative flex items-center">
                                         <Globe size={16} className="absolute left-3 text-zinc-600 pointer-events-none z-10" />
                                         <Input
+                                        aria-label="Job location"
                                             placeholder={isRemote ? "Global / Remote" : "e.g. Austin, TX"}
                                             disabled={isRemote}
                                             className={`${textInputClass} pl-10`}
@@ -222,7 +228,7 @@ export default function PostJobPage() {
 
                             <TextField name="deadline" isInvalid={!!errors.deadline} className="flex flex-col gap-1 w-full">
                                 <Label className="text-zinc-400 font-medium text-sm">Application Deadline</Label>
-                                <Input type="date" className={textInputClass} />
+                                <Input type="date" className={textInputClass} aria-label="Application deadline"/>
                                 {errors.deadline && <FieldError className="text-xs text-danger mt-1">{errors.deadline}</FieldError>}
                             </TextField>
                         </div>
