@@ -74,10 +74,8 @@ export default function PostJobPage() {
             toast.success("Job posted successfully!");
             e.target.reset();
             setIsRemote(false);
-             redirect("/dashboard");
-            console.log("Job posted successfully!");
+             redirect("/dashboard/recruiter/jobs");
         }
-        console.log(res);
     };
 
     // Dark styles styled to match your image_988c20.png reference layout
