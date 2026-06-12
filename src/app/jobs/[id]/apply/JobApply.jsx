@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Form, Button, TextField, Label, Input, Description, FieldError } from '@heroui/react';
 // Gravity UI Icons for a polished look
 import { ArrowRight, Link, FileText, LayoutHeaderCells } from '@gravity-ui/icons';
+import { submitApplications } from '@/lib/actions/applications';
 
 
 const JobApply = ({ job, applicant }) => {
@@ -37,7 +38,7 @@ const JobApply = ({ job, applicant }) => {
 
         console.log('Submitting Application:', submissionData);
         // Handle your API submission here
-        const res = await submitApplication(submissionData);
+        const res = await submitApplications(submissionData);
         if (res.insertedId) {
             alert('Application submitted successfully!');
             setFormData({ resumeLink: '', portfolioLink: '', additionalNotes: '' });
