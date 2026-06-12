@@ -4,12 +4,16 @@ import { useState } from "react";
 import { Card, Button, Link, TextField, Label, InputGroup, Input } from "@heroui/react";
 import { Eye, EyeSlash, At, ShieldKeyhole } from "@gravity-ui/icons";
 import { signIn } from "@/lib/auth-client";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SigninPage() {
     // Form fields
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectTo = searchParams.get("redirect") || "/";
     // UI States
     const [isVisible, setIsVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +33,7 @@ export default function SigninPage() {
             const { data, error: authError } = await signIn.email({
                 email,
                 password,
-                callbackURL: "/" 
+                
             });
 
             if (authError) {
@@ -38,6 +42,7 @@ export default function SigninPage() {
                 setSuccess("Signed in successfully! Redirecting...");
                 setEmail("");
                 setPassword("");
+                router.push(redirectTo);
             }
         } catch (err) {
             setError("An unexpected network error occurred.");
