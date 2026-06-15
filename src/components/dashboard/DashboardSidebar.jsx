@@ -7,7 +7,8 @@ import { Building, Users } from "lucide-react";
 import Link from "next/link";
 
 export async function DashboardSidebar() {
-   const user = await getUserSession();
+
+    const user = await getUserSession();
 
     const recruiterNavLinks = [
         { icon: House, href: "/dashboard/recruiter", label: "Home" },
@@ -44,6 +45,7 @@ export async function DashboardSidebar() {
     }
 
     const navItems = navLinksMap[user?.role || 'seeker'];
+
 
     const navContent = <nav className="flex flex-col gap-1">
         {navItems.map((item) => (
