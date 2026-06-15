@@ -37,7 +37,7 @@ export default function Navbar() {
   if(user?.email){
     navLinks.push({
       label: "Dashboard",
-      href: dashboardLinks[user.role],
+      href: dashboardLinks[user.role || "seeker"],
     });
   }
 
