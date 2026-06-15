@@ -32,12 +32,15 @@ export default function SignupPage() {
         setSuccess("");
         setIsLoading(true);
 
+        const plan = role === "seeker" ? "seekers_free" : "recruiters_free";
+
         try {
             const { data, error: authError } = await authClient.signUp.email({
                 email,
                 password,
                 name,
                 role,
+                plan,
                 
             });
 
