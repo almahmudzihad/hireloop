@@ -6,6 +6,7 @@ import JobApply from './JobApply';
 import { getApplicationsByApplicant } from '@/lib/api/applications';
 import { Linden_Hill } from 'next/font/google';
 import Link from 'next/link';
+import { getPlanById } from '@/lib/api/plans';
 
 const ApplyPage = async ({params}) => {
     const {id} = await params;
@@ -22,10 +23,9 @@ const ApplyPage = async ({params}) => {
     }
     const job = await getJobById(id);
     const application = await getApplicationsByApplicant(user.id);
-    const plan = {
-        name: 'free',
-        maxApplicationsPerMonth: 3,
-    }
+
+    const plan = await getPlanById(user?.plan);
+    
   return (
     <div className="w-full min-h-screen bg-zinc-950 flex flex-col justify-center items-center text-white p-6">
         <h1 className="text-3xl font-bold tracking-tight mb-2">Apply to {job.jobTitle}</h1>
