@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { serverMutations } from "../api/core/server"
 
 
@@ -10,7 +11,9 @@ export const createCompany = async (newCompanyData) => {
     return serverMutations('api/companies', newCompanyData)
 }
 export const updateCompany = async (id, data) => {
-    return serverMutations(`api/companies/${id}`, data , 'PATCH' )
+    const res = serverMutations(`api/companies/${id}`, data , 'PATCH' )
+    revalidatePath('/dashboard/admin/companies')
+    return res
     
 }
 // Fallback to localhost if the env variable isn't picking up on the server side
