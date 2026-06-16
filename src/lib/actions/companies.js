@@ -9,6 +9,10 @@ import { serverMutations } from "../api/core/server"
 export const createCompany = async (newCompanyData) => {
     return serverMutations('api/companies', newCompanyData)
 }
+export const updateCompany = async (id, data) => {
+    return serverMutations(`api/companies/${id}`, data , 'PATCH' )
+    
+}
 // Fallback to localhost if the env variable isn't picking up on the server side
 // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 

@@ -4,7 +4,7 @@ import React from 'react';
 import { Table, Button, Badge } from '@heroui/react';
 // Assuming gravity-ui/icons are installed and imported like this
 import { CircleArrowDownFill } from '@gravity-ui/icons';
-//import { updateCompany } from '@/lib/actions/companies';
+import { updateCompany } from '@/lib/actions/companies';
 
 const CompanyTable = ({ companies }) => {
 
